@@ -25,10 +25,10 @@ const Header = (props) => {
               <Link to="/services">services</Link>
             </li>
             <li>
-              <Link to="#">portfolio</Link>
+              <Link to="/portfolio">portfolio</Link>
             </li>
             <li>
-              <Link to="#">blog</Link>
+              <Link to="/blog">blog</Link>
             </li>
             <li>
               <Link to="/contact">contact us</Link>

@@ -1,6 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const OurBlog = () => {
+const OurBlog = (props) => {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(async () => {
+    await fetch("/api/blog-two-list/")
+      .then((res) => res.json())
+      .then((data) => setBlogs(data.data));
+  }, []);
+
+  const generate = () => {
+    if (blogs === []) {
+      return;
+    }
+    let final = [];
+    blogs.map((blog) => {
+      final.push(
+        <div class="col-md-6">
+          <div class="blog-in">
+            {/* Post Image */}
+            <div class="blog-up-sec">
+              {" "}
+              <img
+                class="img-responsive"
+                width="600px"
+                height="338px"
+                src={blog.image}
+                alt=""
+              />
+              {/* Post Date */}
+              <div class="date-post">
+                {blog.created_at}
+                <img src="/static/images/icon-date-post.png" alt="" />{" "}
+              </div>
+            </div>
+            {/* Post Detail */}
+            <span>{blog.tag}</span>{" "}
+            <a href="#." class="heading">
+              {blog.title}
+            </a>
+            <p>{blog.description}</p>
+          </div>
+        </div>
+      );
+    });
+    return final;
+  };
   return (
     <section class="sectoion-100px our-blog">
       <div class="container">
@@ -17,69 +62,7 @@ const OurBlog = () => {
         {/* Blog Post */}
         <div class="row">
           {/* Post */}
-          <div class="col-md-6">
-            <div class="blog-in">
-              {/* Post Image */}
-              <div class="blog-up-sec">
-                {" "}
-                <img
-                  class="img-responsive"
-                  src="/static/images/blog-1.jpg"
-                  alt=""
-                />
-                {/* Post Date */}
-                <div class="date-post">
-                  {" "}
-                  29 <span> AUG</span>{" "}
-                  <img src="/static/images/icon-date-post.png" alt="" />{" "}
-                </div>
-              </div>
-              {/* Post Detail */}
-              <span>By admin / Agency</span>{" "}
-              <a href="#." class="heading">
-                {" "}
-                Then one day he was shootin' at some food and up through the
-                ground{" "}
-              </a>
-              <p>
-                And we'll do it our way yes our way. Make all our dreams come
-                true for me and you. Boy the way Glen Miller played. Songs that
-                made the hit parade.{" "}
-              </p>
-            </div>
-          </div>
-          {/* Post */}
-          <div class="col-md-6">
-            <div class="blog-in">
-              {/* Post Image */}
-              <div class="blog-up-sec">
-                {" "}
-                <img
-                  class="img-responsive"
-                  src="/static/images/blog-2.jpg"
-                  alt=""
-                />
-                {/* Post Date */}
-                <div class="date-post">
-                  {" "}
-                  29 <span> AUG</span>{" "}
-                  <img src="/static/images/icon-date-post.png" alt="" />{" "}
-                </div>
-              </div>
-              {/* Post Detail */}
-              <span>By admin / Agency</span>{" "}
-              <a href="#." class="heading">
-                {" "}
-                Then one day he was shootin' at some food and up through the
-                ground{" "}
-              </a>
-              <p>
-                And we'll do it our way yes our way. Make all our dreams come
-                true for me and you. Boy the way Glen Miller played. Songs that
-                made the hit parade.{" "}
-              </p>
-            </div>
-          </div>
+          {blogs !== [] ? generate() : null}
         </div>
       </div>
     </section>

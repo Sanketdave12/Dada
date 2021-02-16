@@ -88,18 +88,18 @@ class BlogList(APIView):
         return Response(data={"data": data}, status=status.HTTP_200_OK)
 
 
-class BlogThreeList(APIView):
+class BlogTwoList(APIView):
 
     serializer_class = BlogListSeriazlizer
     model = Blog
 
     def get(self, request, format=None):
 
-        queryset = Blog.objects.all()
+        queryset = Blog.objects.all()[::-1]
 
         data = []
 
-        for entry in queryset[:3]:
+        for entry in queryset[:2]:
 
             data.append(self.serializer_class(entry).data)
 
